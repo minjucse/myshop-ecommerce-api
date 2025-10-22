@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { DatabaseError } from "sequelize";
-import { TGenericErrorResponse } from "../interfaces/error.types";
+import mongoose from "mongoose"
+import { TGenericErrorResponse } from "../interfaces/error.types"
 
-export const handleCastError = (err: DatabaseError): TGenericErrorResponse => {
-  return {
-    statusCode: 400,
-    message: "Invalid input or malformed query. Please check your request."
-  };
-};
+export const handleCastError = (err: mongoose.Error.CastError): TGenericErrorResponse => {
+    return {
+        statusCode: 400,
+        message: "Invalid MongoDB ObjectID. Please provide a valid id"
+    }
+}
