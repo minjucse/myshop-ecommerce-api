@@ -9,7 +9,7 @@ import { BannerServices } from "./banner.service";
 const createBanner = catchAsync(async (req: Request, res: Response) => {
   const decodeToken = req.user as JwtPayload;
 
-  const imagePath = req.file ? `/uploads/banner/${req.file.filename}` : "";
+  const imagePath = req.file ? (req.file as any).path : "";
   const payload = {
     ...req.body,
     imgPath: imagePath,
@@ -71,7 +71,7 @@ const updateBanner = catchAsync(async (req: Request, res: Response) => {
   };
 
   if (req.file) {
-    updatePayload.imgPath = `/uploads/banner/${req.file.filename}`;
+    updatePayload.imgPath =req.file ? (req.file as any).path : "";
   }
 
   const result = await BannerServices.updateBannerIntoDB(id, updatePayload);

@@ -8,7 +8,6 @@ import "./app/config/passport";
 import { globalErrorHandler } from "./app/middlewares/globalErrorhandler";
 import notFound from "./app/middlewares/notFound";
 import { router } from "./app/routes";
-import path from "path";
 
 const app = express()
 
@@ -27,15 +26,14 @@ app.use(cors({
     origin: envVars.FRONTEND_URL,
     credentials: true
 }))
-app.use("/api/v1/uploads", express.static(path.join(process.cwd(), "uploads")));
+
 app.use("/api/v1", router)
 
 app.get("/", (req: Request, res: Response) => {
     res.status(200).json({
-        message: "Welcome to Our Website."
+        message: "Welcome to Tour Management System Backend"
     })
 })
-
 
 app.use(globalErrorHandler)
 

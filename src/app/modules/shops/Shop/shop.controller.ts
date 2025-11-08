@@ -7,7 +7,7 @@ import { ShopServices } from './shop.service';
 
 const createShop = catchAsync(async (req: Request, res: Response) => {
   const decodeToken = req.user as JwtPayload
-  const logoPath = req.file ? `/uploads/shop/${req.file.filename}` : "";
+  const logoPath = req.file ? (req.file as any).path : "";
 
   const payload = { ...req.body, logoUrl: logoPath, createBy: decodeToken.userId, updateBy: decodeToken.userId };
   const result = await ShopServices.createShopIntoDB(payload);
@@ -52,13 +52,13 @@ const updateShop = catchAsync(async (req: Request, res: Response) => {
   // If a new file is uploaded, build the new path
   let logoUrl: string | undefined;
   if (req.file) {
-    logoUrl = `/uploads/shop/${req.file.filename}`;
+    logoUrl =  req.file ? (req.file as any).path : "";
   }
 
   // Merge body and file path, and add updateBy
   const payload = {
     ...req.body,
-    ...(logoUrl && { logoUrl }),      // only override if a new file is present
+    ...(logoUrl && { logoUrl }),    
     updateBy: decodeToken.userId,
   };
 

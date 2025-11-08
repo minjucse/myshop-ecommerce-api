@@ -11,7 +11,11 @@ const router = express.Router();
 router.post(
   '/create',
   checkAuth(Role.SUPER_ADMIN, Role.ADMIN),
-   uploadFile.single("logo"), 
+  (req, res, next) => {
+    req.body.folder = 'shops'; 
+    next();
+  },
+  uploadFile.single("logo"),
   validateRequest(ShopValidation.createShopValidationSchema),
 
   ShopControllers.createShop,
@@ -25,7 +29,11 @@ router.get(
 router.patch(
   '/:id',
   checkAuth(Role.SUPER_ADMIN, Role.ADMIN),
-  uploadFile.single("logo"), 
+  (req, res, next) => {
+    req.body.folder = 'shops'; 
+    next();
+  },
+  uploadFile.single("logo"),
   validateRequest(ShopValidation.updateShopValidationSchema),
   ShopControllers.updateShop,
 );
