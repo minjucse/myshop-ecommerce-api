@@ -8,11 +8,17 @@ const createBannerIntoDB = async (payload: IBanner) => {
   return result;
 };
 
-const getAllBannersFromDB = async (query: Record<string, any>) => {
+const getAllBannersFromDB =async (query: Record<string, any>) => {
   const queryBuilder = new QueryBuilder(Banner.find(), query);
 
   const [data, meta] = await Promise.all([
-    queryBuilder.filter().search(bannerSearchableFields).sort().fields().paginate().build(),
+    queryBuilder
+      .filter()
+      .search(bannerSearchableFields)
+      .sort()
+      .fields()
+      .paginate()
+      .build(),
     queryBuilder.getMeta(),
   ]);
 

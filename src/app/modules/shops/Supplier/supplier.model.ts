@@ -29,6 +29,7 @@ const SupplierSchema = new Schema<ISupplier>(
       default: null,
       trim: true,
     },
+    email: { type: String, required: true },
     remarks: {
       type: String,
       default: null,

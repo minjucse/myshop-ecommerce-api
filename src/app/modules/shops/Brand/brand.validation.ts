@@ -41,6 +41,7 @@ const updateBrandValidationSchema = z.object({
     .optional(),
   remarks: z.string().nullable().optional(),
   isActive: z.boolean().optional(),
+  isDeleted: z.boolean().optional(),
 });
 
 export const BrandValidation = {

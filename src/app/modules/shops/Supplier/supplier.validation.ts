@@ -24,6 +24,11 @@ const createSupplierValidationSchema = z.object({
       .min(2, 'Country name must be at least 2 characters.')
       .optional()
       .nullable(),
+    email: z
+      .string()
+      .email('Invalid email address format')
+      .min(5, 'Email must be at least 5 characters long')
+      .max(100, 'Email cannot exceed 100 characters'),
     remarks: z
       .string()
       .max(500, 'Remarks too long.')
@@ -66,6 +71,11 @@ const updateSupplierValidationSchema = z.object({
       .min(2, 'Country name must be at least 2 characters.')
       .optional()
       .nullable(),
+       email: z
+    .string()
+    .email('Invalid email address format')
+    .min(5, 'Email must be at least 5 characters long')
+    .max(100, 'Email cannot exceed 100 characters'),
     remarks: z
       .string()
       .max(500, 'Remarks too long.')
@@ -82,6 +92,8 @@ const updateSupplierValidationSchema = z.object({
       .optional()
       .nullable(),
   }),
+  isActive: z.boolean().optional(),
+  isDeleted: z.boolean().optional(),
 });
 
 export const SupplierValidation = {

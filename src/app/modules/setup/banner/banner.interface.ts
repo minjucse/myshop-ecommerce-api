@@ -1,7 +1,8 @@
-import {IBaseDocument}  from '../../../models/base.model';
+// src/modules/banner/banner.interface.ts
+import { IBaseDocument } from "../../../models/base.model";
 
-export type IBanner = Omit<IBaseDocument, '_id' | 'createdAt' | 'updatedAt'> & {
-    name: string;
-    imgPath?: string;
-    imageUrl?: string;
-  };
+export interface IBanner extends IBaseDocument {
+  name: string;
+  imgPath?: string;
+  imageUrl?: string;
+}

@@ -12,7 +12,8 @@ router.post(
   '/create',
   checkAuth(Role.SUPER_ADMIN, Role.ADMIN),
   (req, res, next) => {
-    req.body.folder = 'shops'; 
+    req.body = req.body || {}; // ✅ ensure req.body exists
+    req.body.folder = "shops";
     next();
   },
   uploadFile.single("logo"),
@@ -30,7 +31,8 @@ router.patch(
   '/:id',
   checkAuth(Role.SUPER_ADMIN, Role.ADMIN),
   (req, res, next) => {
-    req.body.folder = 'shops'; 
+    req.body = req.body || {};
+    req.body.folder = 'shops';
     next();
   },
   uploadFile.single("logo"),

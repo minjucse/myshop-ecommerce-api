@@ -1,6 +1,6 @@
 import { IBaseDocument } from '../../../models/base.model';
 
-export type IBrand = Omit<IBaseDocument, '_id' | 'createdAt' | 'updatedAt'> & {
+export interface IBrand extends IBaseDocument {
   name: string;
   brandCode: string;
   address: string;
@@ -10,4 +10,5 @@ export type IBrand = Omit<IBaseDocument, '_id' | 'createdAt' | 'updatedAt'> & {
   madeInCountry: string;
   email: string;
   remarks: string;
-};
+}
+

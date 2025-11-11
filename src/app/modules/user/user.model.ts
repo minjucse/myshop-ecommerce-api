@@ -7,7 +7,7 @@ const authProviderSchema = new Schema<IAuthProvider>({
     providerId: { type: String, required: true }
 }, {
     versionKey: false,
-    _id: false
+    id: false
 })
 
 const userSchema = new Schema<IUser>({

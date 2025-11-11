@@ -41,12 +41,19 @@ export class QueryBuilder<T> {
 
         return this;
     }
+    // fields(): this {
+
+    //     const fields = this.query.fields?.split(",").join(" ") || ""
+
+    //     this.modelQuery = this.modelQuery.select(fields)
+
+    //     return this;
+    // }
     fields(): this {
-
-        const fields = this.query.fields?.split(",").join(" ") || ""
-
-        this.modelQuery = this.modelQuery.select(fields)
-
+        if (this.query.fields) {
+            const fields = this.query.fields.split(",").join(" ");
+            this.modelQuery = this.modelQuery.select(fields);
+        }
         return this;
     }
     paginate(): this {
@@ -63,13 +70,15 @@ export class QueryBuilder<T> {
     build() {
         return this.modelQuery
     }
-  extra(options: Record<string, any>): this {
-    // Not fully implemented; you can extend as needed
-    Object.assign(this, options);
-    return this;
-  }
+    extra(options: Record<string, any>): this {
+        // Not fully implemented; you can extend as needed
+        Object.assign(this, options);
+        return this;
+    }
     async getMeta() {
-        const totalDocuments = await this.modelQuery.model.countDocuments()
+        const totalDocuments = await this.modelQuery.model.countDocuments(
+            this.modelQuery.getFilter()
+        );
 
         const page = Number(this.query.page) || 1
         const limit = Number(this.query.limit) || 10

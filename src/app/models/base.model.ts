@@ -1,8 +1,9 @@
-import { Schema, model, Document } from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
+// src/models/base.model.ts
+import { Schema, model, Document } from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 export interface IBaseDocument extends Document {
-  _id: string;
+  id: string;
   isActive?: boolean;
   isDeleted?: boolean;
   createdBy?: string | null;
@@ -11,10 +12,9 @@ export interface IBaseDocument extends Document {
   updatedAt?: Date;
 }
 
-// Define the base schema
 export const BaseSchema = new Schema<IBaseDocument>(
   {
-    _id: {
+    id: {
       type: String,
       default: uuidv4,
     },
@@ -37,7 +37,9 @@ export const BaseSchema = new Schema<IBaseDocument>(
   },
   {
     timestamps: true,
-    discriminatorKey: 'kind',
+    discriminatorKey: "kind",
   }
 );
 
+// Create BaseModel
+export const BaseModel = model<IBaseDocument>("Base", BaseSchema);

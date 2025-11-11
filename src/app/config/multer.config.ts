@@ -5,33 +5,31 @@ import { cloudinaryUpload } from "./cloudinary.config";
 const storage = new CloudinaryStorage({
   cloudinary: cloudinaryUpload,
   params: async (req, file) => {
-    // Example: folder name from request body or default
     const folderName = req.body.folder || "general";
 
-    // Sanitize folder name (remove spaces and special chars)
-    const safeFolder = folderName.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9\-]/g, "");
-
-    // Clean and unique file name
-    const fileName = file.originalname
+    const safeFolder = folderName
       .toLowerCase()
       .replace(/\s+/g, "-")
-      .replace(/\./g, "-")
-      .replace(/[^a-z0-9\-\.]/g, "");
+      .replace(/[^a-z0-9\-]/g, "");
 
-    const extension = file.originalname.split(".").pop();
-    const uniqueFileName =
-      Math.random().toString(36).substring(2) +
-      "-" +
-      Date.now() +
-      "-" +
-      fileName +
-      "." +
-      extension;
+    // ✅ get file name without extension safely
+    const nameWithoutExt = file.originalname
+      .split(".")
+      .slice(0, -1)
+      .join("-")
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9\-]/g, "");
+
+    // ✅ create unique ID without extra extension
+    const uniqueFileName = `${Math.random()
+      .toString(36)
+      .substring(2)}-${Date.now()}-${nameWithoutExt}`;
 
     return {
-      folder: `myshop/${safeFolder}`, 
+      folder: `myshop/${safeFolder}`,
       public_id: uniqueFileName,
-      allowed_formats: ["jpg", "jpeg", "png", "webp"],
+      allowed_formats: ["jpg", "jpeg", "png", "webp"], // ✅ keep allowed formats
     };
   },
 });

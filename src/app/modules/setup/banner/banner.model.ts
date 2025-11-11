@@ -1,17 +1,27 @@
-import { Schema, model } from 'mongoose';
-import { IBanner } from './banner.interface';
+// src/modules/banner/banner.model.ts
+import { Schema } from "mongoose";
+import { BaseModel } from "../../../models/base.model";
+import { IBanner } from "./banner.interface";
 
-const bannerSchema = new Schema<IBanner>(
-  {
-    name: { type: String, required: true, trim: true },
-    imgPath: { type: String, required: true, trim: true },
-    imageUrl: { type: String, required: true, trim: true },  },
-  { timestamps: true } // adds createdAt & updatedAt automatically
-);
+const BannerSchema = new Schema<IBanner>({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  imgPath: {
+    type: String,
+    trim: true,
+    default: "",
+  },
+  imageUrl: {
+    type: String,
+    trim: true,
+    default: "",
+  },
+});
 
-// Optional: add hooks if needed
-// bannerSchema.pre('save', async function(next) { ... });
-
-const Banner = model<IBanner>('Banner', bannerSchema);
+// ✅ Inherit BaseSchema fields via discriminator
+const Banner = BaseModel.discriminator<IBanner>("Banner", BannerSchema);
 
 export default Banner;

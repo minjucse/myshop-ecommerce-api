@@ -23,7 +23,7 @@ const credentialsLogin = catchAsync(async (req: Request, res: Response, next: Ne
         }
 
         const userTokens = await createUserTokens(user)
-        const { password, ...rest } = user.get({ plain: true });
+           const { password: pass, ...rest } = user.toObject()
 
         setAuthCookie(res, userTokens)
         sendResponse(res, {

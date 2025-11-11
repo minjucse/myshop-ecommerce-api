@@ -9,9 +9,10 @@ import { Role } from '../../user/user.interface';
 const router = express.Router();
 
 router.post(
-    '/create-banner',
+    '/create',
     checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     (req, res, next) => {
+        req.body = req.body || {};
         req.body.folder = 'banners'; 
         next();
     },
@@ -27,6 +28,7 @@ router.patch(
     '/:id',
     checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     (req, res, next) => {
+        req.body = req.body || {};
         req.body.folder = 'banners'; 
         next();
     },
