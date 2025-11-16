@@ -12,7 +12,7 @@ router.post(
     sizeControllers.getAllSizes,
 );
 router.post(
-    '/create-Size',
+    '/create',
     checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
     validateRequest(
         sizeValidation.createSizeValidationSchema,

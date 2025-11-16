@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { IColor } from './color.interface'; 
+import { BaseModel } from '../../../models/base.model';
 
 const colorSchema = new Schema<IColor>(
   {
@@ -19,6 +20,5 @@ const colorSchema = new Schema<IColor>(
   }
 );
 
-const Color = model<IColor>('Color', colorSchema);
-
+const Color = BaseModel.discriminator<IColor>("Color", colorSchema);
 export default Color;

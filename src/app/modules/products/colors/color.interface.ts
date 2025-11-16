@@ -1,6 +1,6 @@
-import {IBaseDocument}  from '../../../models/base.model';
+import { IBaseDocument } from '../../../models/base.model';
 
-export type IColor = Omit<IBaseDocument, '_id' | 'createdAt' | 'updatedAt'> & {
-    name: string;
-    hexCode?: string;
-  };
+export interface IColor extends IBaseDocument {
+  name: string;
+  hexCode?: string;
+}

@@ -7,3 +7,4 @@ export type ISubCategory = Omit<IBaseDocument, 'id' | 'createdAt' | 'updatedAt'>
     description?: string | null;  
      categoryId: Types.ObjectId;
 };
+

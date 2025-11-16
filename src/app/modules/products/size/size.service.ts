@@ -4,6 +4,10 @@ import Size from './size.model';
 import { sizeSearchableFields } from './size.constant';
 
 const createSizeIntoDB = async (payload: ISize) => {
+  // Check if size with same name exists
+  const existing = await Size.findOne({ name: payload.name });
+  if (existing) throw new Error(`"${payload.name}" already exists`);
+
   const result = await Size.create(payload);
   return result;
 };
@@ -28,6 +32,10 @@ const updateSizeIntoDB = async (id: string, payload: Partial<ISize>) => {
   const size = await Size.findById(id);
   if (!size) throw new Error("Size not found");
 
+  if (payload.name && payload.name !== size.name) {
+    const existing = await Size.findOne({ name: payload.name });
+    if (existing) throw new Error(`"${payload.name}" already exists`);
+  }
   Object.assign(size, payload);
   await size.save();
   return size;

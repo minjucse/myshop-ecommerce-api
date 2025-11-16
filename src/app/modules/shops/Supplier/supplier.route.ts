@@ -27,7 +27,7 @@ router.patch(
   SupplierControllers.updateSupplier,
 );
 
-router.get(
+router.post(
   '/',
   checkAuth(Role.SUPER_ADMIN, Role.ADMIN, Role.SALESMAN, Role.SHOPADMIN),
   SupplierControllers.getAllSuppliers,
