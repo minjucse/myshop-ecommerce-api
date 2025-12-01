@@ -18,6 +18,7 @@ interface EnvConfig {
     GOOGLE_CALLBACK_URL: string
     EXPRESS_SESSION_SECRET: string
     FRONTEND_URL: string
+    FRONTEND_URL_2: string
     SSL: {
         STORE_ID: string,
         STORE_PASS: string,
@@ -36,6 +37,7 @@ interface EnvConfig {
         CLOUDINARY_API_SECRET: string;
     };
     EMAIL_SENDER: {
+        ADMIN_EMAIL: string;
         SMTP_USER: string;
         SMTP_PASS: string;
         SMTP_PORT: string;
@@ -47,7 +49,7 @@ interface EnvConfig {
 }
 
 const loadEnvVariables = (): EnvConfig => {
-    const requiredEnvVariables: string[] = ["PORT", "DATABASE_URL", "NODE_ENV", "BCRYPT_SALT_ROUND", "JWT_ACCESS_EXPIRES", "JWT_ACCESS_SECRET", "SUPER_ADMIN_EMAIL", "SUPER_ADMIN_PASSWORD", "JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRES", "GOOGLE_CLIENT_SECRET", "GOOGLE_CLIENT_ID", "GOOGLE_CALLBACK_URL", "EXPRESS_SESSION_SECRET", "FRONTEND_URL", "SSL_STORE_ID",
+    const requiredEnvVariables: string[] = ["PORT", "DATABASE_URL", "NODE_ENV", "BCRYPT_SALT_ROUND", "JWT_ACCESS_EXPIRES", "JWT_ACCESS_SECRET", "SUPER_ADMIN_EMAIL", "SUPER_ADMIN_PASSWORD", "JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRES", "GOOGLE_CLIENT_SECRET", "GOOGLE_CLIENT_ID", "GOOGLE_CALLBACK_URL", "EXPRESS_SESSION_SECRET", "FRONTEND_URL","FRONTEND_URL_2", "SSL_STORE_ID",
         "SSL_STORE_PASS",
         "SSL_PAYMENT_API", "SSL_VALIDATION_API", "SSL_SUCCESS_FRONTEND_URL",
         "SSL_FAIL_FRONTEND_URL",
@@ -56,7 +58,7 @@ const loadEnvVariables = (): EnvConfig => {
         "SSL_FAIL_BACKEND_URL",
         "SSL_CANCEL_BACKEND_URL", "CLOUDINARY_CLOUD_NAME",
         "CLOUDINARY_API_KEY",
-        "CLOUDINARY_API_SECRET", "SMTP_PASS",
+        "CLOUDINARY_API_SECRET", "ADMIN_EMAIL", "SMTP_PASS",
         "SMTP_PORT",
         "SMTP_HOST",
         "SMTP_USER",
@@ -85,6 +87,7 @@ const loadEnvVariables = (): EnvConfig => {
         GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL as string,
         EXPRESS_SESSION_SECRET: process.env.EXPRESS_SESSION_SECRET as string,
         FRONTEND_URL: process.env.FRONTEND_URL as string,
+         FRONTEND_URL_2: process.env.FRONTEND_URL_2 as string,
         // ssl
         SSL: {
             STORE_ID: process.env.SSL_STORE_ID as string,
@@ -104,6 +107,7 @@ const loadEnvVariables = (): EnvConfig => {
             CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET as string,
         },
         EMAIL_SENDER: {
+            ADMIN_EMAIL: process.env.ADMIN_EMAIL as string,
             SMTP_USER: process.env.SMTP_USER as string,
             SMTP_PASS: process.env.SMTP_PASS as string,
             SMTP_PORT: process.env.SMTP_PORT as string,

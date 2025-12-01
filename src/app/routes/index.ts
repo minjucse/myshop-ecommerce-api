@@ -9,6 +9,8 @@ import { SizeRoutes } from "../modules/products/size/size.route";
 import { BannerRoutes } from "../modules/setup/banner/banner.route";
 import { CategoryRoutes } from "../modules/products/category/category.route";
 import { SubCategoryRoutes } from "../modules/products/subcategory/subCategory.route";
+import { ContactMessageRoutes } from "../modules/setup/contactMessage/contactMessage.route";
+import { ContactReplyRoutes } from "../modules/setup/contactReply/contactReply.route";
 
 export const router = Router();
 
@@ -23,6 +25,8 @@ const moduleRoutes = [
   { path: "/sizes", route: SizeRoutes },
   { path: "/categories", route: CategoryRoutes },
   { path: "/sub-categories", route: SubCategoryRoutes },
+   { path: "/contactMessage", route: ContactMessageRoutes },
+   { path: "/contactReply", route: ContactReplyRoutes },
 ];
 
 moduleRoutes.forEach(r => router.use(r.path, r.route));
