@@ -56,7 +56,7 @@ productSchema.pre("findOneAndUpdate", async function (next) {
 
         let counter = 0;
         while (await Product.exists({ slug })) {
-            slug = `${slug}-${counter++}` // dhaka-division-2
+            slug = `${slug}-${counter++}` 
         }
 
         division.slug = slug

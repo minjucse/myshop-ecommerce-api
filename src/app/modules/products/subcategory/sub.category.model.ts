@@ -11,7 +11,7 @@ const subCategorySchema = new Schema<ISubCategory>(
     isActive: { type: Boolean, default: true },
     isDeleted: { type: Boolean, default: false },
   },
-  { timestamps: true } // adds createdAt & updatedAt
+  { timestamps: true }
 );
 
 // Pre-save hook to generate slug

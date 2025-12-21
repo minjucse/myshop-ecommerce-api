@@ -13,13 +13,12 @@ const createSubCategory = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'SubCategory is created successfully',
+    message: 'Sub Category is created successfully',
     data: result,
   });
 });
 
 const getAllSubCategorys = catchAsync(async (req: Request, res: Response) => {
-  // Accept page & limit from body (or query)
   const { page = 1, limit = 10, ...filters } = req.body;
 
   const result = await SubCategoryServices.getAllSubCategorysFromDB({
@@ -31,7 +30,7 @@ const getAllSubCategorys = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "All SubCategorys Retrieved Successfully",
+    message: "All Sub Categorys Retrieved Successfully",
     data: result.data,
     meta: result.meta,
   });
@@ -45,7 +44,7 @@ const getSingleSubCategory = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'SubCategory is retrieved successfully',
+    message: 'Sub Category is retrieved successfully',
     data: result,
   });
 });
@@ -57,7 +56,7 @@ const updateSubCategory = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'SubCategory is updated successfully',
+    message: 'Sub Category is updated successfully',
     data: result,
   });
 });
@@ -69,7 +68,7 @@ const deleteSubCategory = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'SubCategory Delete successfully',
+    message: 'Sub Category Delete successfully',
     data: result,
   });
 });
