@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 import { BaseModel } from '../../../models/base.model';
 import { IAttributeValue } from "./attributeValue.interface";
 
-const AttributeValueSchema = new Schema<IAttributeValue>({
+const attributeValueSchema = new Schema<IAttributeValue>({
   name: {
     type: String,
     required: true,
@@ -30,6 +30,6 @@ const AttributeValueSchema = new Schema<IAttributeValue>({
 
 export const AttributeValue = BaseModel.discriminator<IAttributeValue>(
   "AttributeValue",
-  AttributeValueSchema
+  attributeValueSchema
 );
 
