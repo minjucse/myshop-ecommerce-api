@@ -28,8 +28,5 @@ const attributeValueSchema = new Schema<IAttributeValue>({
   },
 });
 
-export const AttributeValue = BaseModel.discriminator<IAttributeValue>(
-  "AttributeValue",
-  attributeValueSchema
-);
-
+ const AttributeValue = BaseModel.discriminator<IAttributeValue>( "AttributeValue", attributeValueSchema );
+ export default AttributeValue;

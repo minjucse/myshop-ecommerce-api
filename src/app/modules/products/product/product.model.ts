@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { IProduct } from "./product.interface";
+import { generateUniqueSlug } from "../../../utils/slugify"
 
 const productSchema = new Schema<IProduct>(
   {
@@ -80,7 +81,7 @@ const productSchema = new Schema<IProduct>(
       ref: "Category",
       required: true,
     },
-  subCategoryId: {
+    subCategoryId: {
       type: Schema.Types.ObjectId,
       ref: "SubCategory",
       required: true,
@@ -106,38 +107,29 @@ productSchema.index({ slug: 1 }, { unique: true });
 productSchema.index({ categoryId: 1 });
 productSchema.index({ brandId: 1 });
 
-const generateUniqueSlug = async (
-  name: string,
-  model: any
-): Promise<string> => {
-  const baseSlug = name.toLowerCase().trim().replace(/\s+/g, "-");
-  let slug = baseSlug;
-  let counter = 1;
-
-  while (await model.exists({ slug })) {
-    slug = `${baseSlug}-${counter++}`;
-  }
-
-  return slug;
-};
 
 productSchema.pre("save", async function (next) {
-  if (this.isModified("name")) {
-    this.slug = await generateUniqueSlug(this.name, Product);
+  if (!this.slug) {
+    this.slug = await generateUniqueSlug(
+      this.constructor as any,
+      this.name
+    );
   }
   next();
 });
 
 productSchema.pre("findOneAndUpdate", async function (next) {
-  const update = this.getUpdate() as Partial<IProduct>;
+  const update = this.getUpdate() as any;
 
   if (update?.name) {
-    update.slug = await generateUniqueSlug(update.name, Product);
+    update.slug = await generateUniqueSlug(
+      this.model,
+      update.name
+    );
     this.setUpdate(update);
   }
 
   next();
 });
-
-const Product = model<IProduct>("Product", productSchema);
-export default Product;
+const ProductDetail = model<IProduct>("ProductDetail", productSchema);
+export default ProductDetail;

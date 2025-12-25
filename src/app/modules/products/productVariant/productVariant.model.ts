@@ -13,12 +13,12 @@ const productAttributeSchema = new Schema<IProductAttribute>(
     attributeValueId: {
       type: Schema.Types.ObjectId,
       ref: "AttributeValue",
-      required: true,
+      default: null,
     },
 
     productDetailId: {
       type: Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "ProductDetail",
       required: true,
     },
   },

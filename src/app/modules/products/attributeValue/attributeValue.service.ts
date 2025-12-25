@@ -1,6 +1,6 @@
 import { QueryBuilder } from '../../../utils/QueryBuilder';
 import { IAttributeValue } from './attributeValue.interface';
-import { AttributeValue } from './attributeValue.model';
+import  AttributeValue  from './attributeValue.model';
 import AttributeGroup from '../attributeGroup/attributeGroup.model'; 
 import { AttributeValueSearchableFields } from './attributeValue.constant';
 
