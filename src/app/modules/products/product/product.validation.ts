@@ -22,3 +22,8 @@ export const createProductZodSchema = z.object({
 });
 
 export const updateProductZodSchema = createProductZodSchema.partial();
+
+export const ProductValidation = {
+  createProductValidationSchema: createProductZodSchema,
+  updateProductValidationSchema: updateProductZodSchema,
+};
