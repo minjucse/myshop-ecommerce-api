@@ -29,7 +29,14 @@ const getAllSuppliers = catchAsync(async (req, res) => {
     meta: result.meta
   });
 });
-
+const getDropdownSuppliers = async (req: Request, res: Response) => {
+  const data = await SupplierServices.getDropdownSupplierFromDB();
+  res.status(200).json({
+    success: true,
+    message: 'Categories for dropdown fetched successfully',
+    data,
+  });
+}; 
 const getSingleSupplier = catchAsync(async (req, res) => {
   const { SupplierId } = req.params;
   const result = await SupplierServices.getSingleSupplierFromDB(SupplierId);
@@ -69,6 +76,7 @@ const deleteSupplier = catchAsync(async (req, res) => {
 export const SupplierControllers = {
   createSupplier,
   getAllSuppliers,
+  getDropdownSuppliers,
   getSingleSupplier,
   updateSupplier,
   deleteSupplier

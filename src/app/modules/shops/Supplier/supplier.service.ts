@@ -26,6 +26,12 @@ const getAllSuppliersFromDB = async (query: Record<string, any>) => {
   return { data, meta };
 };
 
+const getDropdownSupplierFromDB = async () => {
+  const result = await Supplier.find({ isActive: true })
+    .select('_id name')
+    .sort({ name: 1 });
+  return result;
+};
 const getSingleSupplierFromDB = async (id: string) => {
   const result = await Supplier.findById(id);
   return result;
@@ -56,6 +62,7 @@ const deleteSupplierFromDB = async (id: string) => {
 export const SupplierServices = {
   createSupplierIntoDB,
   getAllSuppliersFromDB,
+  getDropdownSupplierFromDB,
   getSingleSupplierFromDB,
   updateSupplierIntoDB,
   deleteSupplierFromDB,

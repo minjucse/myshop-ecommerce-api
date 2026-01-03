@@ -32,7 +32,7 @@ router.post(
   checkAuth(Role.SUPER_ADMIN, Role.ADMIN, Role.SALESMAN, Role.SHOPADMIN),
   SupplierControllers.getAllSuppliers,
 );
-
+router.get('/dropdown', SupplierControllers.getDropdownSuppliers);
 router.delete(
   '/:id',
   checkAuth(Role.SUPER_ADMIN, Role.ADMIN),
