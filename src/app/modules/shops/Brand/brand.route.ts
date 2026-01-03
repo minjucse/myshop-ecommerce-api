@@ -21,7 +21,7 @@ router.get(
     '/:id',
     BrandControllers.getSingleBrand,
 );
-
+router.get('/dropdown', BrandControllers.getDropdownBrands);
 router.patch(
     '/:id',
     checkAuth(Role.ADMIN, Role.SUPER_ADMIN),

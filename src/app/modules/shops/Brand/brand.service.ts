@@ -18,6 +18,12 @@ const getAllBrandsFromDB = async (query: Record<string, any>) => {
 
   return { data, meta };
 };
+const getDropdownBrandFromDB = async () => {
+  const result = await Brand.find({ isActive: true })
+    .select('_id name')
+    .sort({ name: 1 });
+  return result;
+};
 
 const getSingleBrandFromDB = async (id: string) => {
   const result = await Brand.findById(id);
@@ -45,6 +51,7 @@ const deleteBrandFromDB = async (id: string) => {
 export const BrandServices = {
   createBrandIntoDB,
   getAllBrandsFromDB,
+  getDropdownBrandFromDB,
   getSingleBrandFromDB,
   updateBrandIntoDB,
   deleteBrandFromDB,

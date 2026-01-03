@@ -36,6 +36,14 @@ const getAllBrands = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getDropdownBrands = async (req: Request, res: Response) => {
+  const data = await BrandServices.getDropdownBrandFromDB();
+  res.status(200).json({
+    success: true,
+    message: 'Categories for dropdown fetched successfully',
+    data,
+  });
+}; 
 const getSingleBrand = catchAsync(async (req, res) => {
   const id = req.params.id;
   const result = await BrandServices.getSingleBrandFromDB(id);
@@ -75,6 +83,7 @@ const deleteBrand = catchAsync(async (req, res) => {
 export const BrandControllers = {
   createBrand,
   getAllBrands,
+  getDropdownBrands,
   getSingleBrand,
   updateBrand,
   deleteBrand
