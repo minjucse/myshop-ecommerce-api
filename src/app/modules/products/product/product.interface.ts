@@ -8,6 +8,8 @@ export type IProduct = Omit<IBaseDocument, '_id' | 'createdAt' | 'updatedAt'> & 
   name: string;
   img?: string;
   slug: string;
+  productSku?: string;
+  productCode?: string;
   description?: string | null;
   price: number;
   discountPrice?: number | null;

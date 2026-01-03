@@ -19,7 +19,14 @@ const productSchema = new Schema<IProduct>(
       trim: true,
       match: /^[a-z0-9-]+$/,
     },
-
+    productSku: {
+      type: String,
+      default: null,
+    },
+    productCode: {
+      type: String,
+      default: null,
+    },
     img: {
       type: String,
       default: null,
