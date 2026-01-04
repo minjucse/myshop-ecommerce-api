@@ -18,6 +18,7 @@ const getAllBrandsFromDB = async (query: Record<string, any>) => {
 
   return { data, meta };
 };
+
 const getDropdownBrandFromDB = async () => {
   const result = await Brand.find({ isActive: true })
     .select('_id name')

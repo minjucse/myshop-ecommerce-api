@@ -49,21 +49,32 @@ const getAllAttributeValuesFromDB = async (query: Record<string, any>) => {
 };
 
 const getSingleAttributeValueFromDB = async (id: string) => {
-  const result = await AttributeValue.findById(id).populate({
-    path: 'attributeGroupId',
-    select: 'name',
-    model: AttributeGroup,
-  });
+  const result = await AttributeValue.findById(id)
+    .populate({
+      path: 'attributeGroupId',
+      select: '_id name',
+      model: AttributeGroup,
+    })
+    .lean();
 
   if (!result) return null;
 
-  return result;
+  return {
+    ...result,
+    attributeGroupId: result.attributeGroupId?._id,
+  };
 };
 
-const getDropdownAttributeValueFromDB = async () => {
-  const result = await AttributeValue.find({ isActive: true })
+
+const getDropdownAttributeValueFromDB = async (attributeGroupId: string) => {
+  const result = await AttributeValue.find({
+    isActive: true,
+    attributeGroupId, 
+  })
     .select('_id name')
-    .sort({ name: 1 });
+    .sort({ name: 1 })
+    .lean();
+
   return result;
 };
 

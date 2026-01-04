@@ -38,14 +38,18 @@ const getAllAttributeValues = catchAsync(async (req: Request, res: Response) => 
 });
 
 const getDropdownAttributeValues = async (req: Request, res: Response) => {
-  const data = await AttributeValueServices.getDropdownAttributeValueFromDB();
-  res.status(200).json({
-    success: true,
-    message: 'Attribute Values for dropdown fetched successfully',
-    data,
-  });
-};
+  const { attributeGroupId } = req.query;
 
+  if (!attributeGroupId) {
+    throw new Error('attributeGroupId is required');
+  }
+
+  const data = await AttributeValueServices.getDropdownAttributeValueFromDB(
+    attributeGroupId as string
+  );
+
+  res.status(200).json({ success: true, data });
+};
 const getSingleAttributeValue = catchAsync(async (req, res) => {
   const id = req.params.id;
   const result = await AttributeValueServices.getSingleAttributeValueFromDB(id);

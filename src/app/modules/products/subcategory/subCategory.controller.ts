@@ -36,6 +36,19 @@ const getAllSubCategorys = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getSubCategoryDropdown = async (req: Request, res: Response) => {
+  const { categoryId } = req.query;
+
+  if (!categoryId) {
+    throw new Error('categoryId is required');
+  }
+
+  const data = await SubCategoryServices.getSubCategoryDropdownFromDB(
+    categoryId as string
+  );
+
+  res.status(200).json({ success: true, data });
+};
 
 const getSingleSubCategory = catchAsync(async (req, res) => {
   const id = req.params.id;
@@ -75,6 +88,7 @@ const deleteSubCategory = catchAsync(async (req, res) => {
 export const SubCategoryControllers = {
   createSubCategory,
   getAllSubCategorys,
+  getSubCategoryDropdown,
   getSingleSubCategory,
   updateSubCategory,
   deleteSubCategory

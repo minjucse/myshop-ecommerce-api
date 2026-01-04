@@ -72,6 +72,17 @@ const getSingleSubCategoryFromDB = async (id: string) => {
   };
 };
 
+const getSubCategoryDropdownFromDB = async (categoryId: string) => {
+  const result = await SubCategory.find({
+    isActive: true,
+    categoryId, // 🔥 filter by category
+  })
+    .select('_id name')
+    .sort({ name: 1 })
+    .lean();
+
+  return result;
+};
 
 // -------------------------------
 // UPDATE
@@ -114,6 +125,7 @@ const deleteSubCategoryFromDB = async (id: string) => {
 export const SubCategoryServices = {
   createSubCategoryIntoDB,
   getAllSubCategorysFromDB,
+  getSubCategoryDropdownFromDB,
   getSingleSubCategoryFromDB,
   updateSubCategoryIntoDB,
   deleteSubCategoryFromDB,

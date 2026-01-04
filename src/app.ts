@@ -9,55 +9,86 @@ import { globalErrorHandler } from "./app/middlewares/globalErrorhandler";
 import notFound from "./app/middlewares/notFound";
 import { router } from "./app/routes";
 
-const app = express()
+const app = express();
 
-app.use(expressSession({
-  secret: envVars.EXPRESS_SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
-}))
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(cookieParser())
-app.use(express.json())
+/* ============================
+   TRUST PROXY (IMPORTANT)
+============================ */
 app.set("trust proxy", 1);
-app.use(express.urlencoded({ extended: true }))
+
+/* ============================
+   BODY PARSERS
+============================ */
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+/* ============================
+   COOKIE & SESSION
+============================ */
+app.use(cookieParser());
+
+app.use(
+  expressSession({
+    secret: envVars.EXPRESS_SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: envVars.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "lax",
+    },
+  })
+);
+
+/* ============================
+   PASSPORT
+============================ */
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* ============================
+   CORS
+============================ */
 const allowedOrigins = [
   envVars.FRONTEND_URL,
-  envVars.FRONTEND_URL_2
+  envVars.FRONTEND_URL_2,
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) {
-      // Allow requests like Postman, curl
-      return callback(null, true);
-    }
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
       console.warn("Blocked by CORS:", origin);
-      // ✅ Allow anyway, remove error to prevent "Not allowed by CORS"
+      // ⚠️ Currently allowing all
       return callback(null, true);
+    },
+    credentials: true,
+  })
+);
 
-      // If you want strict blocking, use this instead:
-      // return callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-}));
+/* ============================
+   ROUTES
+============================ */
+app.use("/api/v1", router);
 
-app.use("/api/v1", router)
-
+/* ============================
+   ROOT
+============================ */
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
-    message: "Welcome to MyShop System Backend"
-  })
-})
+    message: "Welcome to MyShop System Backend",
+  });
+});
 
-app.use(globalErrorHandler)
+/* ============================
+   ERROR HANDLERS
+============================ */
+app.use(globalErrorHandler);
+app.use(notFound);
 
-app.use(notFound)
-
-export default app
+export default app;

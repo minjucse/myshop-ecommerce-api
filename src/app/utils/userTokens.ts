@@ -8,7 +8,7 @@ import { generateToken, verifyToken } from "./jwt";
 
 export const createUserTokens = (user: Partial<IUser>) => {
     const jwtPayload = {
-        userId: user._id,
+        userId: user.id,
         email: user.email,
         role: user.role
     }

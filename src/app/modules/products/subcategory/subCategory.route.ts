@@ -21,7 +21,7 @@ router.post(
     '/',
     SubCategoryControllers.getAllSubCategorys,
 );
-
+router.get('/dropdown', SubCategoryControllers.getSubCategoryDropdown);
 router
   .route('/:id')
   .get(
