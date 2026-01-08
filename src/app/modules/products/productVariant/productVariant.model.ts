@@ -1,40 +1,32 @@
+// productVariant.model.ts
 import { Schema, model } from "mongoose";
 import { IProductAttribute } from "./productVariant.interface";
 
 const productAttributeSchema = new Schema<IProductAttribute>(
   {
-    barCode: {
-      type: String,
-      trim: true,
-      maxlength: 100,
-      default: null,
-    },
-
     attributeValueId: {
       type: Schema.Types.ObjectId,
       ref: "AttributeValue",
-      default: null,
+      required: true,
+      index: true,
     },
 
     productDetailId: {
       type: Schema.Types.ObjectId,
       ref: "ProductDetail",
       required: true,
+      index: true,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-// Indexes for performance
-productAttributeSchema.index({ barCode: 1 });
-productAttributeSchema.index({ attributeValueId: 1 });
-productAttributeSchema.index({ productDetailId: 1 });
+productAttributeSchema.index(
+  { productDetailId: 1, attributeValueId: 1 },
+  { unique: true }
+);
 
-const ProductAttribute = model<IProductAttribute>(
+export default model<IProductAttribute>(
   "ProductAttribute",
   productAttributeSchema
 );
-
-export default ProductAttribute;
